@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Event Cover Pro - Mobile Layout</title>
-    <!-- Подключаем Russo One для обложки и Montserrat для интерфейса -->
+    <title>Event Cover Pro - Dynamic Text</title>
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         :root {
             --accent-color: #98fb00; 
+            --accent-dark: #3d6500;
             --bg-dark: #121212;
             --card-radius: 20px;
         }
@@ -19,7 +19,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif; /* Общий шрифт для UI */
+            font-family: 'Montserrat', sans-serif;
         }
 
         body {
@@ -108,7 +108,7 @@
         }
 
         .controls button {
-            background: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
             color: #000;
             border: none;
             padding: 15px 20px;
@@ -137,20 +137,25 @@
         .cover-container {
             width: 900px;
             height: 600px;
-            background-color: var(--bg-dark);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            padding: 8px; 
             position: absolute;
             top: 0;
             left: 0;
             transform-origin: top left;
+            box-sizing: border-box;
+        }
+
+        .cover-inner {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top center, #1a1a1a 0%, #0a0a0a 100%);
+            position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 8px solid var(--accent-color);
-            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9), 
-                        inset 0 0 40px var(--accent-color);
-            transition: border-color 0.5s ease, box-shadow 0.5s ease;
-            box-sizing: border-box;
+            box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.95);
         }
 
         .bg-custom-image {
@@ -181,13 +186,14 @@
 
         .bg-glow {
             position: absolute;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, var(--accent-color) 0%, transparent 60%);
-            opacity: 0.15;
-            top: -200px; left: -100px;
+            width: 900px; height: 900px;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 55%);
+            opacity: 0.12;
+            top: -250px; left: -50px;
             border-radius: 50%;
             z-index: 2;
             pointer-events: none;
+            transition: background 0.5s ease;
         }
 
         .watermark {
@@ -202,58 +208,59 @@
         .card-white {
             margin-top: 50px; 
             background: #ffffff;
-            padding: 22px 60px;
+            padding: 22px 40px; /* Уменьшили немного боковые отступы, чтобы влезало больше текста */
             border-radius: var(--card-radius);
             z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             text-align: center;
-            max-width: 80%;
+            max-width: 85%;
+            transition: all 0.2s ease; /* Плавная смена размера шрифта */
         }
 
         .card-white h1 {
             color: #111;
-            font-size: 42px; 
+            font-size: 42px; /* Базовый размер */
             font-weight: 900;
             letter-spacing: 1px;
             text-transform: uppercase;
             margin: 0;
             word-break: break-word;
-            font-family: 'Russo One', sans-serif; /* Шрифт обложки */
+            font-family: 'Russo One', sans-serif;
         }
 
         .card-accent {
             margin-top: -25px; 
-            background: var(--accent-color);
-            padding: 16px 50px; 
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            padding: 16px 40px; 
             border-radius: 18px; 
             z-index: 20; 
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-color);
             text-align: center;
-            transition: background 0.5s ease;
-            border: 3px solid rgba(255,255,255,0.2);
+            transition: background 0.5s ease, all 0.2s ease;
+            border: 3px solid rgba(255,255,255,0.15);
             max-width: 85%;
         }
 
         .card-accent h2 {
             color: #ffffff;
-            font-size: 26px; 
+            font-size: 26px; /* Базовый размер */
             font-weight: 800;
             margin: 0 0 4px 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             letter-spacing: 1px;
             word-break: break-word;
-            font-family: 'Russo One', sans-serif; /* Шрифт обложки */
+            font-family: 'Russo One', sans-serif;
         }
 
         .card-accent p {
             color: #ffffff;
-            font-size: 16px; 
+            font-size: 16px; /* Базовый размер */
             font-weight: 600;
             opacity: 0.9;
             letter-spacing: 1.5px;
             margin: 0;
             word-break: break-word;
-            font-family: 'Russo One', sans-serif; /* Шрифт обложки */
+            font-family: 'Russo One', sans-serif;
         }
 
         .prize-container {
@@ -291,7 +298,6 @@
 <body>
 
     <div class="app-container">
-        <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
         <div class="controls">
             <div class="control-group" style="border: 1px dashed var(--accent-color);">
                 <label>Фоновый паттерн (картинка):</label>
@@ -318,13 +324,14 @@
 
             <div class="control-group">
                 <label>Название круга:</label>
-                <input type="text" id="inputCommunity" value="ИВЕНТ ОТ КК" maxlength="25">
+                <!-- Увеличили maxlength до 50 -->
+                <input type="text" id="inputCommunity" value="ИВЕНТ ОТ КК" maxlength="50">
                 
                 <label style="margin-top: 10px;">Название ивента:</label>
-                <input type="text" id="inputEvent" value="KURSED KITCHEN" maxlength="30">
+                <input type="text" id="inputEvent" value="KURSED KITCHEN" maxlength="40">
                 
                 <label style="margin-top: 10px;">Даты:</label>
-                <input type="text" id="inputDates" value="26 ОКТЯБРЯ – 31 ОКТЯБРЯ" maxlength="35">
+                <input type="text" id="inputDates" value="26 ОКТЯБРЯ – 31 ОКТЯБРЯ" maxlength="40">
             </div>
 
             <div class="control-group">
@@ -337,28 +344,29 @@
             </div>
         </div>
 
-        <!-- ОБЛОЖКА -->
         <div class="cover-wrapper" id="coverWrapper">
             <div class="cover-container" id="cover">
-                
-                <div class="bg-custom-image" id="bgCustomImage"></div>
-                <div class="bg-default-pattern" id="bgDefaultPattern"></div>
-                <div class="bg-glow" id="bgGlow"></div>
+                <div class="cover-inner">
+                    
+                    <div class="bg-custom-image" id="bgCustomImage"></div>
+                    <div class="bg-default-pattern" id="bgDefaultPattern"></div>
+                    <div class="bg-glow" id="bgGlow"></div>
 
-                <div class="watermark">@KYODOEVENTS</div>
+                    <div class="watermark">@KYODOEVENTS</div>
 
-                <div class="card-white">
-                    <h1 id="displayCommunity">ИВЕНТ ОТ КК</h1>
-                </div>
+                    <div class="card-white">
+                        <h1 id="displayCommunity">ИВЕНТ ОТ КК</h1>
+                    </div>
 
-                <div class="card-accent" id="accentCard">
-                    <h2 id="displayEvent">KURSED KITCHEN</h2>
-                    <p id="displayDates">26 ОКТЯБРЯ – 31 ОКТЯБРЯ</p>
-                </div>
+                    <div class="card-accent" id="accentCard">
+                        <h2 id="displayEvent">KURSED KITCHEN</h2>
+                        <p id="displayDates">26 ОКТЯБРЯ – 31 ОКТЯБРЯ</p>
+                    </div>
 
-                <div class="prize-container">
-                    <span class="placeholder-text" id="placeholder">КАРТИНКА<br>ПРИЗА</span>
-                    <div id="prizeImage" class="prize-bg"></div>
+                    <div class="prize-container">
+                        <span class="placeholder-text" id="placeholder">КАРТИНКА<br>ПРИЗА</span>
+                        <div id="prizeImage" class="prize-bg"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -384,7 +392,7 @@
         const displayEvent = document.getElementById('displayEvent');
         const displayDates = document.getElementById('displayDates');
 
-        // --- СОХРАНЕНИЕ И ЗАГРУЗКА НАСТРОЕК ---
+        // Функция для сохранения
         function saveSettings() {
             const settings = {
                 community: document.getElementById('inputCommunity').value,
@@ -399,59 +407,82 @@
             localStorage.setItem('eventCoverSettings', JSON.stringify(settings));
         }
         
+        // Функция для обновления текста и ДИНАМИЧЕСКОГО РАЗМЕРА ШРИФТА
+        function updateText(inputElement, displayElement, fallbackText, baseSize, minSize) {
+            const updateUI = (text) => {
+                const val = text.trim();
+                const finalText = val !== '' ? val : fallbackText;
+                displayElement.textContent = finalText;
+
+                // Считаем длину текста (учитывая эмодзи)
+                const len = Array.from(finalText).length;
+                
+                // Если символов много, уменьшаем шрифт
+                if (len > 30) {
+                    displayElement.style.fontSize = minSize + 'px';
+                } else if (len > 20) {
+                    displayElement.style.fontSize = (baseSize * 0.75) + 'px';
+                } else if (len > 15) {
+                    displayElement.style.fontSize = (baseSize * 0.85) + 'px';
+                } else {
+                    displayElement.style.fontSize = baseSize + 'px'; // Базовый размер
+                }
+            };
+
+            // Слушаем ввод
+            inputElement.addEventListener('input', (e) => {
+                updateUI(e.target.value);
+                saveSettings();
+            });
+
+            // Применяем при загрузке
+            updateUI(inputElement.value);
+        }
+
+        // Инициализируем с базовыми и минимальными размерами
+        updateText(inputCommunity, displayCommunity, 'НАЗВАНИЕ КРУГА', 42, 18);
+        updateText(inputEvent, displayEvent, 'НАЗВАНИЕ ИВЕНТА', 26, 16);
+        updateText(inputDates, displayDates, 'ДАТЫ', 16, 12);
+
+
+        // Загрузка сохраненных настроек
         function loadSettings() {
             const saved = localStorage.getItem('eventCoverSettings');
             if (!saved) return;
             const s = JSON.parse(saved);
 
-            // Восстанавливаем текст
-            if (s.community) { document.getElementById('inputCommunity').value = s.community; document.getElementById('displayCommunity').textContent = s.community; }
-            if (s.event) { document.getElementById('inputEvent').value = s.event; document.getElementById('displayEvent').textContent = s.event; }
-            if (s.dates) { document.getElementById('inputDates').value = s.dates; document.getElementById('displayDates').textContent = s.dates; }
+            // Восстанавливаем текст и триггерим обновление шрифта
+            if (s.community) { inputCommunity.value = s.community; inputCommunity.dispatchEvent(new Event('input')); }
+            if (s.event) { inputEvent.value = s.event; inputEvent.dispatchEvent(new Event('input')); }
+            if (s.dates) { inputDates.value = s.dates; inputDates.dispatchEvent(new Event('input')); }
 
-            // Восстанавливаем настройки фона
+            // Восстанавливаем фон
             if (s.bgScale) { document.getElementById('bgScale').value = s.bgScale; document.getElementById('valScale').textContent = s.bgScale + 'px'; document.getElementById('bgCustomImage').style.backgroundSize = s.bgScale + 'px'; }
             if (s.bgOpacity) { document.getElementById('bgOpacity').value = s.bgOpacity; document.getElementById('valOpacity').textContent = s.bgOpacity + '%'; document.getElementById('bgCustomImage').style.opacity = s.bgOpacity / 100; }
             if (s.bgRotate) { document.getElementById('bgRotate').value = s.bgRotate; document.getElementById('valRotate').textContent = s.bgRotate + '°'; document.getElementById('bgCustomImage').style.transform = `rotate(${s.bgRotate}deg)`; }
 
-            // Восстанавливаем фоновый паттерн
             if (s.bgImage) {
                 document.getElementById('bgCustomImage').style.backgroundImage = s.bgImage;
                 document.getElementById('bgDefaultPattern').style.display = 'none';
             }
             
-            // Восстанавливаем картинку приза И ЦВЕТ
+            // Восстанавливаем приз
             if (s.prizeImage) {
                 const prizeImg = document.getElementById('prizeImage');
                 prizeImg.style.backgroundImage = s.prizeImage;
                 prizeImg.style.display = 'block';
                 document.getElementById('placeholder').style.display = 'none';
 
-                // Извлекаем URL из строки url("data:image...")
                 const imgSrc = s.prizeImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
                 const img = new Image();
-                img.onload = function() {
-                    extractColor(img); // Восстанавливаем цвет при загрузке
-                };
+                img.onload = function() { extractColor(img); };
                 img.src = imgSrc;
             }
         }
         
-        // Вызываем загрузку при старте
         loadSettings();
 
-        function updateText(inputElement, displayElement, fallbackText) {
-            inputElement.addEventListener('input', (e) => {
-                const val = e.target.value.trim();
-                displayElement.textContent = val !== '' ? val : fallbackText;
-                saveSettings();
-            });
-        }
-
-        updateText(inputCommunity, displayCommunity, 'НАЗВАНИЕ КРУГА');
-        updateText(inputEvent, displayEvent, 'НАЗВАНИЕ ИВЕНТА');
-        updateText(inputDates, displayDates, 'ДАТЫ');
-
+        // Обработчики для фона
         const bgImageUpload = document.getElementById('bgImageUpload');
         const bgCustomImage = document.getElementById('bgCustomImage');
         const bgDefaultPattern = document.getElementById('bgDefaultPattern');
@@ -466,7 +497,6 @@
         bgImageUpload.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(event) {
                 bgCustomImage.style.backgroundImage = `url(${event.target.result})`;
@@ -497,11 +527,10 @@
             saveSettings();
         });
 
-        // --- ЛОГИКА КАРТИНКИ ПРИЗА ---
+        // Обработчик для приза
         document.getElementById('imageUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(event) {
                 const img = new Image();
@@ -518,6 +547,7 @@
             reader.readAsDataURL(file);
         });
 
+        // Алгоритм подбора цвета (Vibrant)
         function extractColor(img) {
             const canvas = document.getElementById('colorCanvas');
             const ctx = canvas.getContext('2d');
@@ -525,30 +555,65 @@
             ctx.drawImage(img, 0, 0, 50, 50);
             const imageData = ctx.getImageData(0, 0, 50, 50).data;
 
-            let maxScore = 0;
-            let dominantColor = { r: 152, g: 251, b: 0 };
+            let colorBuckets = {};
+            let dominantColor = { r: 152, g: 251, b: 0 }; 
 
             for (let i = 0; i < imageData.length; i += 4) {
                 const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2], a = imageData[i + 3];
                 if (a < 128) continue;
 
-                const brightness = (r * 0.299 + g * 0.587 + b * 0.114);
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                const saturation = max - min;
+                let rNorm = r / 255, gNorm = g / 255, bNorm = b / 255;
+                let max = Math.max(rNorm, gNorm, bNorm), min = Math.min(rNorm, gNorm, bNorm);
+                let h, s, l = (max + min) / 2;
 
-                if (brightness > 40 && brightness < 220 && saturation > 60) {
-                    const score = brightness + (saturation * 2);
-                    if (score > maxScore) {
-                        maxScore = score;
-                        dominantColor = { r, g, b };
+                if (max === min) {
+                    h = s = 0; 
+                } else {
+                    let d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+                        case gNorm: h = (bNorm - rNorm) / d + 2; break;
+                        case bNorm: h = (rNorm - gNorm) / d + 4; break;
                     }
+                    h /= 6;
+                }
+
+                if (l > 0.2 && l < 0.8 && s > 0.4) {
+                    let bucketR = Math.round(r / 20) * 20;
+                    let bucketG = Math.round(g / 20) * 20;
+                    let bucketB = Math.round(b / 20) * 20;
+                    let key = `${bucketR},${bucketG},${bucketB}`;
+
+                    if (!colorBuckets[key]) {
+                        colorBuckets[key] = { count: 0, r: bucketR, g: bucketG, b: bucketB, s: s, l: l };
+                    }
+                    colorBuckets[key].count++;
+                }
+            }
+
+            let bestScore = 0;
+            for (let key in colorBuckets) {
+                let c = colorBuckets[key];
+                let lightnessPenalty = 1 - Math.abs(c.l - 0.5) * 2; 
+                let score = c.count * c.s * (lightnessPenalty + 0.2); 
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    dominantColor = { r: c.r, g: c.g, b: c.b };
                 }
             }
 
             const accentRgb = `rgb(${dominantColor.r}, ${dominantColor.g}, ${dominantColor.b})`;
+            const darkR = Math.floor(dominantColor.r * 0.6);
+            const darkG = Math.floor(dominantColor.g * 0.6);
+            const darkB = Math.floor(dominantColor.b * 0.6);
+            const accentDarkRgb = `rgb(${darkR}, ${darkG}, ${darkB})`;
+
             document.documentElement.style.setProperty('--accent-color', accentRgb);
-            document.getElementById('downloadBtn').style.background = accentRgb;
+            document.documentElement.style.setProperty('--accent-dark', accentDarkRgb);
+            
+            document.getElementById('downloadBtn').style.background = `linear-gradient(135deg, ${accentRgb}, ${accentDarkRgb})`;
             
             const brightness = (dominantColor.r * 299 + dominantColor.g * 587 + dominantColor.b * 114) / 1000;
             const textColor = brightness > 180 ? '#111111' : '#ffffff'; 
@@ -558,7 +623,7 @@
             cardAccent.querySelector('p').style.color = textColor;
         }
 
-        // --- СКАЧИВАНИЕ PNG ---
+        // Скачивание
         document.getElementById('downloadBtn').addEventListener('click', function() {
             const originalCover = document.getElementById('cover');
             const btn = this;
@@ -591,7 +656,7 @@
                     scale: 2, 
                     width: 900,
                     height: 600,
-                    backgroundColor: '#121212',
+                    backgroundColor: null, 
                     useCORS: true,
                     logging: false,
                     scrollX: 0,
